@@ -40,7 +40,7 @@ class WinServiceGui():
         Thread(target=self.refresh).start()
         
         if self.autoRefreshState:
-            self.main_service_window.after(self.refreshTime, self.autoRefresh)  # inkrementieren (Funktion die sich selbst aufruft :)
+            self.main_service_window.after(self.refreshTime, self.autoRefresh)  
         
         self.main_service_window.mainloop()
         
