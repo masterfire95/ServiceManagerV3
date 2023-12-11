@@ -6,7 +6,7 @@ For example, you can create a configuration with which only the Exchange Windows
 
 ## How to:
 Use ServiceManagerSelection.py to start the program.
-You can add a new configuration with the Add button. Here you have to enter Name(of the config), AutoRefresh (y/n), RefreshTime(s) and RowsPerColumn(e.g. 3 services then in the next column). Finally, click on Add Service and add hostname and service name. Then click on Create ServiceList. A <name>.json is now created in the ServiceLists folder (can be changed in the config.json file). 
+You can add a new configuration with the New button. Here you have to enter Name(of the config), AutoRefresh (y/n), RefreshTime(s) and RowsPerColumn(e.g. 3 services then in the next column). Finally, click on Add Service and add hostname and service name. Then click on Create ServiceList. A <name>.json is now created in the ServiceLists folder (can be changed in the config.json file). 
 
 ![image](https://github.com/masterfire95/ServiceManagerV3/assets/92512530/656633a1-1663-47a1-8673-a6a603b0be89)
 
