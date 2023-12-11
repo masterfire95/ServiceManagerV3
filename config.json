@@ -1,0 +1,14 @@
+{
+    "colors" : {
+        "bg" : "#3E4F9F",
+        "fg" : "white",
+        "btn" : "#8794D0",
+        "state_run" : "#9BC696",
+        "state_stop" : "#FB646C",
+        "state_pend" : "orange",
+        "state_unkown" : "orange"
+    },
+    "font" : ["Arial", 12],
+    "font_bold" : ["Arial", 12, "bold"],
+    "serviceListDir" : ".\\serviceLists"
+}
