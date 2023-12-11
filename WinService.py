@@ -32,5 +32,4 @@ class WinService:
         return True
 
 if __name__ == '__main__':
-    #print(WinService.check_state_single_host("aos-at-999",["SCardSvr"]))#,"ScDeviceEnum"]))
     pass
