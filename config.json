@@ -1,8 +1,9 @@
 {
     "colors" : {
-        "bg" : "#3E4F9F",
+        "bg" : "#1E0C56",
         "fg" : "white",
-        "btn" : "#8794D0",
+        "btn" : "#331491",
+        "frame" : "#291074",
         "state_run" : "#9BC696",
         "state_stop" : "#FB646C",
         "state_pend" : "orange",

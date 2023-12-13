@@ -11,18 +11,16 @@ from json import load as jsLoad
 
 class ServiceManagerSelection():
     def __init__(self) -> None:
-        
-        self.config_path ='.\\config.json'
+        self.config_path = ".\\config.json" #'.\\itopsTool\\ServiceManagerV3\\config.json'
         
         try:
             with open(self.config_path,'r') as f:   # load config
                 config = jsLoad(f)
                 self.colors = config['colors']
                 self.font = config['font']
-                self.font_bold = config['font_bold']
                 self.serviceListDir = config['serviceListDir']
                 
-        except FileNotFoundError:   # Config not found 
+        except FileNotFoundError:   # Config not found
             messagebox.showerror("Config not found","File config.json is not in the directory")
             exit()
             
@@ -30,15 +28,20 @@ class ServiceManagerSelection():
             messagebox.showerror("Config failure","Config.json has errors in it")
             exit()
         
+#        if not osPath.exists(self.serviceListDir):
+#            messagebox.showerror("serviceList Directory not found", "The serviceList directory couldn't be found. Please check the config.json an change the path or create an folder")
+#            return
+
+
         ######
         # GUI
         ######
         self.serviceManagerSelectionWindow = Tk()
-        self.serviceManagerSelectionWindow.config(bg=self.colors['bg'])
         self.serviceManagerSelectionWindow.title("ServiceManager")
-        self.serviceManagerSelectionWindow.geometry("265x135")      
+        self.serviceManagerSelectionWindow.config(bg=self.colors['bg'])
+        self.serviceManagerSelectionWindow.geometry("275x135")      
 
-        new_b = Button(self.serviceManagerSelectionWindow, text="New", width=10, bg=self.colors['bg'], fg=self.colors['fg'], font=self.font, command=self.new_config)   # create new ServiceMap
+        new_b = Button(self.serviceManagerSelectionWindow, text="New", width=10, bg=self.colors['btn'], fg=self.colors['fg'], font=self.font, borderwidth=3, command=self.new_config)   # create new ServiceMap
         new_b.grid(row=0,column=0, pady=10, padx=10,sticky=W)
         
         Label(self.serviceManagerSelectionWindow, text="Select Config", bg=self.colors['bg'], fg=self.colors['fg'], font=self.font).grid(row=1,column=0)
@@ -47,7 +50,7 @@ class ServiceManagerSelection():
         self.selection_c.grid(row=2, column=0, padx=5)
         self.refresh()  # load Servicemaps on start
         
-        ok_b = Button(self.serviceManagerSelectionWindow, text="Run",width=10,bg=self.colors['bg'],fg=self.colors['fg'],font=self.font, command=self.select_conf)   # open ServiceManager with selection
+        ok_b = Button(self.serviceManagerSelectionWindow, text="Run",width=10,bg=self.colors['btn'],fg=self.colors['fg'],font=self.font, borderwidth=3, command=self.select_conf)   # open ServiceManager with selection
         ok_b.grid(row=2, column=1, sticky=W)
         
         self.state_overview_l = Label(self.serviceManagerSelectionWindow, text="", fg=self.colors['fg'], bg=self.colors['bg'], font=self.font)
@@ -56,8 +59,11 @@ class ServiceManagerSelection():
         self.serviceManagerSelectionWindow.mainloop()
 
     # gets Files from serviceListDir Folder
-    def refresh(self):  
-        choices = [ele.replace('.json','') for ele in listdir(self.serviceListDir)] # creates list with alle Filenames without file ending
+    def refresh(self): 
+        if len(listdir(self.serviceListDir)) != 0:
+            choices = [ele.replace('.json','') for ele in listdir(self.serviceListDir)] # creates list with alle Filenames without file ending
+        else:
+            choices = [""]
         self.selection_c.config(values=choices)
         self.selection_c.current(0) # default values = first item
     
@@ -97,13 +103,13 @@ class ServiceManagerSelection():
         rowsPerCol_e = Entry(newConfWindow, font=self.font)
         rowsPerCol_e.grid(row=3, column=1,padx=10,pady=5)
         
-        create_b = Button(newConfWindow, text="Create ServiceList",bg=self.colors['bg'],fg=self.colors['fg'],font=self.font, command=lambda: self.create_serviceList(name_e.get(), autoRef_e.get(), refreshTime_e.get(),rowsPerCol_e.get(),newConfWindow))  # Creates ServiceMap
+        create_b = Button(newConfWindow, text="Create ServiceList",bg=self.colors['btn'],fg=self.colors['fg'],font=self.font, borderwidth=3, command=lambda: self.create_serviceList(name_e.get(), autoRef_e.get(), refreshTime_e.get(),rowsPerCol_e.get(),newConfWindow))  # Creates ServiceMap
         create_b.grid(row=self.serviceRow+1,column=1,padx=10,pady=5)
         
         self.state_add_l = Label(newConfWindow, text="", fg=self.colors['fg'], bg=self.colors['bg'], font=self.font)
         self.state_add_l.grid(row=self.serviceRow+1, column=0)
         
-        addService_b = Button(newConfWindow, text="Add Service",bg=self.colors['bg'],fg=self.colors['fg'],font=self.font, command=lambda: self.add_service(newConfWindow,create_b)) #
+        addService_b = Button(newConfWindow, text="Add Service",bg=self.colors['btn'],fg=self.colors['fg'],font=self.font, borderwidth=3, command=lambda: self.add_service(newConfWindow,create_b)) #
         addService_b.grid(row=4, column=0, columnspan=2,padx=10,pady=5)
     
         newConfWindow.mainloop()
@@ -113,7 +119,7 @@ class ServiceManagerSelection():
         service_f = Frame(window)
         service_f.config(bg=self.colors['bg'])
         service_f.grid(row=self.serviceRow,column=0, columnspan=3,padx=10,pady=5)
-        
+    
         Label(service_f, text="Hostname",bg=self.colors['bg'],fg=self.colors['fg'],font=self.font).grid(row=0,column=0)
         hostname_e = Entry(service_f, font=self.font)
         hostname_e.grid(row=0,column=1)
@@ -122,7 +128,7 @@ class ServiceManagerSelection():
         service_e = Entry(service_f, font=self.font)
         service_e.grid(row=0,column=3)
         
-        del_b = Button(service_f, text="X",bg=self.colors['state_stop'],fg=self.colors['fg'],font=self.font, command=lambda: self.del_service(service_f, [hostname_e, service_e]))  # deletes a service frame
+        del_b = Button(service_f, text="X",bg=self.colors['state_stop'], fg=self.colors['fg'], font=self.font, borderwidth=0, command=lambda: self.del_service(service_f, [hostname_e, service_e]))  # deletes a service frame
         del_b.grid(row=0,column=4,padx=5)
         
         self.EntryList.append([hostname_e, service_e])  # appends the Entry list
