@@ -11,7 +11,7 @@ from json import load as jsLoad
 
 class ServiceManagerSelection():
     def __init__(self) -> None:
-        self.config_path = ".\\config.json" #'.\\itopsTool\\ServiceManagerV3\\config.json'
+        self.config_path = ".\\config.json" 
         
         try:
             with open(self.config_path,'r') as f:   # load config
@@ -27,11 +27,6 @@ class ServiceManagerSelection():
         except KeyError:    # Error in Config File
             messagebox.showerror("Config failure","Config.json has errors in it")
             exit()
-        
-#        if not osPath.exists(self.serviceListDir):
-#            messagebox.showerror("serviceList Directory not found", "The serviceList directory couldn't be found. Please check the config.json an change the path or create an folder")
-#            return
-
 
         ######
         # GUI
