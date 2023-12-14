@@ -3,8 +3,12 @@ from WinServiceManager import WinServiceGui
 from tkinter.ttk import Combobox
 from tkinter import Tk, Frame, Label, Button, Entry, messagebox, W
 
+from sys import argv as cmdArgs
+from getopt import getopt
+
 from os import listdir
 from os import path as osPath
+from os import mkdir
 
 from json import dump as jsDump
 from json import load as jsLoad
@@ -12,6 +16,10 @@ from json import load as jsLoad
 class ServiceManagerSelection():
     def __init__(self) -> None:
         self.config_path = ".\\config.json" 
+        arguments, _ = getopt(cmdArgs[1:], "c:", "config=") # get cmd parameters
+        for argument,value in arguments:    
+            if argument in ("-c", "--config"):  # if -c or --config para has been used
+                self.config_path = value     # overwrite config path
         
         try:
             with open(self.config_path,'r') as f:   # load config
@@ -27,6 +35,10 @@ class ServiceManagerSelection():
         except KeyError:    # Error in Config File
             messagebox.showerror("Config failure","Config.json has errors in it")
             exit()
+        
+        if not osPath.exists(self.serviceListDir):  # create serviceLists folder if path in config is invalid
+            mkdir('.\\serviceLists')
+            self.serviceListDir = ".\\serviceLists"
 
         ######
         # GUI
@@ -94,7 +106,7 @@ class ServiceManagerSelection():
         refreshTime_e = Entry(newConfWindow, font=self.font)
         refreshTime_e.grid(row=2, column=1, padx=10,pady=5)
         
-        Label(newConfWindow, text="Rows per Column:",bg=self.colors['bg'],fg=self.colors['fg'],font=self.font).grid(row=3, column=0,padx=10,pady=5)
+        Label(newConfWindow, text="Services per Column:",bg=self.colors['bg'],fg=self.colors['fg'],font=self.font).grid(row=3, column=0,padx=10,pady=5)
         rowsPerCol_e = Entry(newConfWindow, font=self.font)
         rowsPerCol_e.grid(row=3, column=1,padx=10,pady=5)
         
